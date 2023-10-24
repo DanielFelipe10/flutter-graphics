@@ -4,13 +4,16 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
 class Bar {
-  Bar(this.height);
+  Bar(this.height, this.color);
 
   final double height;
+  final Color color;
 
   static Bar lerp(Bar begin, Bar end, double t) {
-    final height = lerpDouble(begin.height, end.height, t) ?? 0.0;
-    return Bar(height);
+    return Bar(
+      lerpDouble(begin.height, end.height, t)!,
+      Color.lerp(begin.color, end.color, t)!,
+    );
   }
 }
 
@@ -21,34 +24,4 @@ class BarTween extends Tween<Bar> {
   Bar lerp(double t) {
     return Bar.lerp(begin!, end!, t);
   }
-}
-
-class BarChartPainter extends CustomPainter {
-  static const barWidth = 10.0;
-
-  BarChartPainter(Animation<Bar> animation)
-      : animation = animation,
-        super(repaint: animation);
-
-  final Animation<Bar> animation;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final bar = animation.value;
-    final paint = Paint()
-      ..color = Colors.blue[400] ?? Colors.blue
-      ..style = PaintingStyle.fill;
-    canvas.drawRect(
-      Rect.fromLTWH(
-        (size.width - barWidth) / 2.0,
-        size.height - bar.height,
-        barWidth,
-        bar.height,
-      ),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(BarChartPainter old) => false;
 }

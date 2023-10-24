@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'bar.dart';
 
 void main() {
-  runApp(MaterialApp(home: ChartPage()));
+  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: ChartPage()));
 }
 
 class ChartPage extends StatefulWidget {
